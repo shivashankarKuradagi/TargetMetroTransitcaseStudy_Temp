@@ -1,39 +1,49 @@
 package com.target.metrotransit.metrotransitCaseStudy.entity;
 
-import java.util.Date;
-
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class NexTripDeparture {
-	
-	@JsonProperty("DepartureText")
-	private String departureText;
-	
-	@JsonProperty("DepartureTime")
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm a z")
-	private Date departureTime;
+public class NexTripDeparture
+{
 
-	public NexTripDeparture() {
-		super(); 
-	}
-	
-	
-	public String getDepartureText() {
-		return departureText;
-	}
+    @JsonProperty( "DepartureText" )
+    private String departureText;
 
-	public void setDepartureText(String departureText) {
-		this.departureText = departureText;
-	}
+    @JsonProperty( "DepartureTime" )
+    @JsonFormat( shape = JsonFormat.Shape.STRING, timezone = "CLT", pattern = "yyyy-MM-dd'T'HH:mm:ss" )
+    private String departureTime;
 
-	public Date getDepartureTime() {
-		return departureTime;
-	}
+    public NexTripDeparture()
+    {
+        super();
+    }
 
-	public void setDepartureTime(Date departureTime) {
-		this.departureTime = departureTime;
-	}
-		
+    public String getDepartureText()
+    {
+        return departureText;
+    }
+
+    public void setDepartureText( String departureText )
+    {
+        this.departureText = departureText;
+    }
+
+    public String getDepartureTime()
+    {
+        return departureTime;
+    }
+
+    public void setDepartureTime( String departureTime )
+    {
+        this.departureTime = departureTime;
+    }
+
+    public NexTripDeparture( String departureText,
+        String departureTime )
+    {
+        super();
+        this.departureText = departureText;
+        this.departureTime = departureTime;
+    }
 
 }

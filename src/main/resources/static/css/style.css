@@ -1,0 +1,27 @@
+.lables {
+	margin-left: 10%;
+	margin-right: 5%;
+}
+
+.rowStyle {
+	margin-bottom: 1%;
+}
+
+.inputField {
+	width: 30%;
+}
+
+.button {
+	margin-left: 50%;
+}
+
+.result {
+	margin-top: 4%;
+	color: darkgreen;
+	margin-left: 10%;
+}
+.failureResult{
+	margin-top: 4%;
+	color: red;
+	margin-left: 10%;
+}
