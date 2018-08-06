@@ -28,6 +28,7 @@ public class MetroTransitHelper
     static Logger log = LoggerFactory.getLogger( MetroTransitHelper.class );
 
     /**
+     * Method to get Route Details for the given Route Description Input
      * 
      * @param route
      * @return
@@ -54,6 +55,8 @@ public class MetroTransitHelper
     }
 
     /**
+     * 
+     * Method to verify the Direction for the given Route and Direction
      * 
      * @param direction
      * @param routeId
@@ -84,6 +87,8 @@ public class MetroTransitHelper
     }
 
     /**
+     * 
+     * Method to get the Stop Details for the Given Direction, Route and Stop detail String 
      * 
      * @param stop
      * @param direction
@@ -118,6 +123,8 @@ public class MetroTransitHelper
 
     /**
      * 
+     * Method to gte the Next Trip Detail object for the Given Direction, RouteId, StopValue
+     * 
      * @param direction
      * @param routeId
      * @param stopValue
@@ -143,6 +150,10 @@ public class MetroTransitHelper
     }
 
     /**
+     * 
+     * Method to Get the Waiting Time For the Given Trip
+     * 
+     * Waiting time = DepartureTime - CurrentTime
      * 
      * @param departure
      * @return

@@ -1,6 +1,7 @@
 package com.target.metrotransit.casestudy.controller;
 
 import org.springframework.boot.json.JsonParseException;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import com.target.metrotransit.casestudy.helper.MetroTransitHelper;
@@ -41,12 +42,14 @@ public class MetroTransitControllerTest
                 result = new NexTripDeparture( "3:35", "/Date(1533328500000-0500)/" );
 
                 helper.toJson( any );
-                result = anyString;
+                result = "Valid Result";
 
             }
         };
 
         String temp = controller.getWaitingTime( request );
+        Assert.assertNotNull( temp );
+
     }
 
     @Test( expectedExceptions = Exception.class )
@@ -79,7 +82,6 @@ public class MetroTransitControllerTest
 
             }
         };
-
-        String temp = controller.getWaitingTime( request );
+        controller.getWaitingTime( request );
     }
 }
