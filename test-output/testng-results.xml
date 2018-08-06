@@ -1,17 +1,142 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testng-results skipped="0" failed="0" ignored="12" total="13" passed="1">
+<testng-results skipped="0" failed="0" ignored="0" total="15" passed="15">
   <reporter-output>
   </reporter-output>
-  <suite name="Default suite" duration-ms="599" started-at="2018-08-05T19:00:13Z" finished-at="2018-08-05T19:00:13Z">
+  <suite name="Default suite" duration-ms="3108" started-at="2018-08-06T08:55:08Z" finished-at="2018-08-06T08:55:11Z">
     <groups>
     </groups>
-    <test name="Default test" duration-ms="599" started-at="2018-08-05T19:00:13Z" finished-at="2018-08-05T19:00:13Z">
-      <class name="com.target.metrotransit.metrotransitCaseStudy.helper.MetroTrainsitHelperTest">
-        <test-method status="PASS" signature="toJsonTest()[pri:0, instance:com.target.metrotransit.metrotransitCaseStudy.helper.MetroTrainsitHelperTest@48503868]" name="toJsonTest" duration-ms="561" started-at="2018-08-06T00:30:13Z" finished-at="2018-08-06T00:30:13Z">
+    <test name="Default test" duration-ms="3108" started-at="2018-08-06T08:55:08Z" finished-at="2018-08-06T08:55:11Z">
+      <class name="com.target.metrotransit.casestudy.controller.MetroTransitControllerTest">
+        <test-method status="PASS" signature="getWaitingTimeTest(com.target.metrotransit.casestudy.helper.MetroTransitHelper)[pri:0, instance:com.target.metrotransit.casestudy.controller.MetroTransitControllerTest@dd4aec3]" name="getWaitingTimeTest" duration-ms="369" started-at="2018-08-06T03:55:08Z" finished-at="2018-08-06T03:55:09Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- getWaitingTimeTest -->
+        <test-method status="PASS" signature="getWaitingTimeWithExceptionTest(com.target.metrotransit.casestudy.helper.MetroTransitHelper)[pri:0, instance:com.target.metrotransit.casestudy.controller.MetroTransitControllerTest@dd4aec3]" name="getWaitingTimeWithExceptionTest" duration-ms="50" started-at="2018-08-06T03:55:09Z" finished-at="2018-08-06T03:55:09Z">
+          <exception class="org.springframework.boot.json.JsonParseException">
+            <message>
+              <![CDATA[Cannot parse JSON]]>
+            </message>
+            <full-stacktrace>
+              <![CDATA[org.springframework.boot.json.JsonParseException: Cannot parse JSON
+	at com.target.metrotransit.casestudy.helper.MetroTransitHelper.toJson(MetroTransitHelper.java)
+	at com.target.metrotransit.casestudy.controller.MetroTransitController.getWaitingTime(MetroTransitController.java:74)
+	at com.target.metrotransit.casestudy.controller.MetroTransitControllerTest.getWaitingTimeWithExceptionTest(MetroTransitControllerTest.java:83)
+]]>
+            </full-stacktrace>
+          </exception> <!-- org.springframework.boot.json.JsonParseException -->
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- getWaitingTimeWithExceptionTest -->
+      </class> <!-- com.target.metrotransit.casestudy.controller.MetroTransitControllerTest -->
+      <class name="com.target.metrotransit.casestudy.helper.MetroTransitHelperTest">
+        <test-method status="PASS" signature="getNextTripDetailTest(org.springframework.web.client.RestTemplate)[pri:0, instance:com.target.metrotransit.casestudy.helper.MetroTransitHelperTest@1d02af26]" name="getNextTripDetailTest" duration-ms="241" started-at="2018-08-06T03:55:09Z" finished-at="2018-08-06T03:55:09Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- getNextTripDetailTest -->
+        <test-method status="PASS" signature="getNextTripDetailWithEmptyResponseTest(org.springframework.web.client.RestTemplate)[pri:0, instance:com.target.metrotransit.casestudy.helper.MetroTransitHelperTest@1d02af26]" name="getNextTripDetailWithEmptyResponseTest" duration-ms="32" started-at="2018-08-06T03:55:09Z" finished-at="2018-08-06T03:55:09Z">
+          <exception class="com.target.metrotransit.casestudy.exception.ResourseNotFoundException">
+            <message>
+              <![CDATA[For the given BUS ROUTE, DIRECTION and BUS STOP NAME, Unable to find any Trips.]]>
+            </message>
+            <full-stacktrace>
+              <![CDATA[com.target.metrotransit.casestudy.exception.ResourseNotFoundException: For the given BUS ROUTE, DIRECTION and BUS STOP NAME, Unable to find any Trips.
+	at com.target.metrotransit.casestudy.helper.MetroTransitHelper.getNextTripDetail(MetroTransitHelper.java:142)
+	at com.target.metrotransit.casestudy.helper.MetroTransitHelperTest.getNextTripDetailWithEmptyResponseTest(MetroTransitHelperTest.java:287)
+]]>
+            </full-stacktrace>
+          </exception> <!-- com.target.metrotransit.casestudy.exception.ResourseNotFoundException -->
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- getNextTripDetailWithEmptyResponseTest -->
+        <test-method status="PASS" signature="getRouteEmptyResponseTest(org.springframework.web.client.RestTemplate)[pri:0, instance:com.target.metrotransit.casestudy.helper.MetroTransitHelperTest@1d02af26]" name="getRouteEmptyResponseTest" duration-ms="76" started-at="2018-08-06T03:55:09Z" finished-at="2018-08-06T03:55:10Z">
+          <exception class="com.target.metrotransit.casestudy.exception.ResourseNotFoundException">
+            <message>
+              <![CDATA[BUS ROUTE not found.]]>
+            </message>
+            <full-stacktrace>
+              <![CDATA[com.target.metrotransit.casestudy.exception.ResourseNotFoundException: BUS ROUTE not found.
+	at com.target.metrotransit.casestudy.helper.MetroTransitHelper.getRoute(MetroTransitHelper.java:53)
+	at com.target.metrotransit.casestudy.helper.MetroTransitHelperTest.getRouteEmptyResponseTest(MetroTransitHelperTest.java:93)
+]]>
+            </full-stacktrace>
+          </exception> <!-- com.target.metrotransit.casestudy.exception.ResourseNotFoundException -->
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- getRouteEmptyResponseTest -->
+        <test-method status="PASS" signature="getRouteTest(org.springframework.web.client.RestTemplate)[pri:0, instance:com.target.metrotransit.casestudy.helper.MetroTransitHelperTest@1d02af26]" name="getRouteTest" duration-ms="42" started-at="2018-08-06T03:55:10Z" finished-at="2018-08-06T03:55:10Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- getRouteTest -->
+        <test-method status="PASS" signature="getRouteWithEmptyRouteTest(org.springframework.web.client.RestTemplate)[pri:0, instance:com.target.metrotransit.casestudy.helper.MetroTransitHelperTest@1d02af26]" name="getRouteWithEmptyRouteTest" duration-ms="18" started-at="2018-08-06T03:55:10Z" finished-at="2018-08-06T03:55:10Z">
+          <exception class="com.target.metrotransit.casestudy.exception.ResourseNotFoundException">
+            <message>
+              <![CDATA[BUS ROUTE not found.]]>
+            </message>
+            <full-stacktrace>
+              <![CDATA[com.target.metrotransit.casestudy.exception.ResourseNotFoundException: BUS ROUTE not found.
+	at com.target.metrotransit.casestudy.helper.MetroTransitHelper.getRoute(MetroTransitHelper.java:53)
+	at com.target.metrotransit.casestudy.helper.MetroTransitHelperTest.getRouteWithEmptyRouteTest(MetroTransitHelperTest.java:74)
+]]>
+            </full-stacktrace>
+          </exception> <!-- com.target.metrotransit.casestudy.exception.ResourseNotFoundException -->
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- getRouteWithEmptyRouteTest -->
+        <test-method status="PASS" signature="getStopEmptyNameTest(org.springframework.web.client.RestTemplate)[pri:0, instance:com.target.metrotransit.casestudy.helper.MetroTransitHelperTest@1d02af26]" name="getStopEmptyNameTest" duration-ms="47" started-at="2018-08-06T03:55:10Z" finished-at="2018-08-06T03:55:10Z">
+          <exception class="com.target.metrotransit.casestudy.exception.ResourseNotFoundException">
+            <message>
+              <![CDATA[For the given BUS ROUTE and DIRECTION, Invalid BUS STOP NAME is selected]]>
+            </message>
+            <full-stacktrace>
+              <![CDATA[com.target.metrotransit.casestudy.exception.ResourseNotFoundException: For the given BUS ROUTE and DIRECTION, Invalid BUS STOP NAME is selected
+	at com.target.metrotransit.casestudy.helper.MetroTransitHelper.getStop(MetroTransitHelper.java:116)
+	at com.target.metrotransit.casestudy.helper.MetroTransitHelperTest.getStopEmptyNameTest(MetroTransitHelperTest.java:239)
+]]>
+            </full-stacktrace>
+          </exception> <!-- com.target.metrotransit.casestudy.exception.ResourseNotFoundException -->
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- getStopEmptyNameTest -->
+        <test-method status="PASS" signature="getStopInvalidStopNameTest(org.springframework.web.client.RestTemplate)[pri:0, instance:com.target.metrotransit.casestudy.helper.MetroTransitHelperTest@1d02af26]" name="getStopInvalidStopNameTest" duration-ms="56" started-at="2018-08-06T03:55:10Z" finished-at="2018-08-06T03:55:10Z">
+          <exception class="com.target.metrotransit.casestudy.exception.ResourseNotFoundException">
+            <message>
+              <![CDATA[For the given BUS ROUTE and DIRECTION, Invalid BUS STOP NAME is selected]]>
+            </message>
+            <full-stacktrace>
+              <![CDATA[com.target.metrotransit.casestudy.exception.ResourseNotFoundException: For the given BUS ROUTE and DIRECTION, Invalid BUS STOP NAME is selected
+	at com.target.metrotransit.casestudy.helper.MetroTransitHelper.getStop(MetroTransitHelper.java:116)
+	at com.target.metrotransit.casestudy.helper.MetroTransitHelperTest.getStopInvalidStopNameTest(MetroTransitHelperTest.java:223)
+]]>
+            </full-stacktrace>
+          </exception> <!-- com.target.metrotransit.casestudy.exception.ResourseNotFoundException -->
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- getStopInvalidStopNameTest -->
+        <test-method status="PASS" signature="getStopTest(org.springframework.web.client.RestTemplate)[pri:0, instance:com.target.metrotransit.casestudy.helper.MetroTransitHelperTest@1d02af26]" name="getStopTest" duration-ms="25" started-at="2018-08-06T03:55:10Z" finished-at="2018-08-06T03:55:10Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- getStopTest -->
+        <test-method status="PASS" signature="getWaitTimeInMinutesTest()[pri:0, instance:com.target.metrotransit.casestudy.helper.MetroTransitHelperTest@1d02af26]" name="getWaitTimeInMinutesTest" duration-ms="879" started-at="2018-08-06T03:55:10Z" finished-at="2018-08-06T03:55:11Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- getWaitTimeInMinutesTest -->
+        <test-method status="PASS" signature="isValidDirectionFalseTest(org.springframework.web.client.RestTemplate)[pri:0, instance:com.target.metrotransit.casestudy.helper.MetroTransitHelperTest@1d02af26]" name="isValidDirectionFalseTest" duration-ms="44" started-at="2018-08-06T03:55:11Z" finished-at="2018-08-06T03:55:11Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- isValidDirectionFalseTest -->
+        <test-method status="PASS" signature="isValidDirectionTest(org.springframework.web.client.RestTemplate)[pri:0, instance:com.target.metrotransit.casestudy.helper.MetroTransitHelperTest@1d02af26]" name="isValidDirectionTest" duration-ms="85" started-at="2018-08-06T03:55:11Z" finished-at="2018-08-06T03:55:11Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- isValidDirectionTest -->
+        <test-method status="PASS" signature="isValidDirectionWithEmptyResponse(org.springframework.web.client.RestTemplate)[pri:0, instance:com.target.metrotransit.casestudy.helper.MetroTransitHelperTest@1d02af26]" name="isValidDirectionWithEmptyResponse" duration-ms="70" started-at="2018-08-06T03:55:11Z" finished-at="2018-08-06T03:55:11Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- isValidDirectionWithEmptyResponse -->
+        <test-method status="PASS" signature="toJsonTest()[pri:0, instance:com.target.metrotransit.casestudy.helper.MetroTransitHelperTest@1d02af26]" name="toJsonTest" duration-ms="155" started-at="2018-08-06T03:55:11Z" finished-at="2018-08-06T03:55:11Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- toJsonTest -->
-      </class> <!-- com.target.metrotransit.metrotransitCaseStudy.helper.MetroTrainsitHelperTest -->
+      </class> <!-- com.target.metrotransit.casestudy.helper.MetroTransitHelperTest -->
     </test> <!-- Default test -->
   </suite> <!-- Default suite -->
 </testng-results>

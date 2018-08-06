@@ -1,6 +1,5 @@
-package com.target.metrotransit.metrotransitCaseStudy.entity;
+package com.target.metrotransit.casestudy.valueobjects;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class NexTripDeparture
@@ -10,7 +9,6 @@ public class NexTripDeparture
     private String departureText;
 
     @JsonProperty( "DepartureTime" )
-    @JsonFormat( shape = JsonFormat.Shape.STRING, timezone = "CLT", pattern = "yyyy-MM-dd'T'HH:mm:ss" )
     private String departureTime;
 
     public NexTripDeparture()

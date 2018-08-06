@@ -1,4 +1,4 @@
-package com.target.metrotransit.metrotransitCaseStudy.helper;
+package com.target.metrotransit.casestudy.helper;
 
 import java.text.ParseException;
 
@@ -8,22 +8,24 @@ import org.springframework.web.client.RestTemplate;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import com.target.metrotransit.metrotransitCaseStudy.constants.MetroTransitConstants;
-import com.target.metrotransit.metrotransitCaseStudy.entity.MetroTransitResponse;
-import com.target.metrotransit.metrotransitCaseStudy.entity.NexTripDeparture;
-import com.target.metrotransit.metrotransitCaseStudy.entity.Route;
-import com.target.metrotransit.metrotransitCaseStudy.entity.TextValuePair;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.target.metrotransit.casestudy.constants.MetroTransitConstants;
+import com.target.metrotransit.casestudy.exception.ResourseNotFoundException;
+import com.target.metrotransit.casestudy.valueobjects.MetroTransitResponse;
+import com.target.metrotransit.casestudy.valueobjects.NexTripDeparture;
+import com.target.metrotransit.casestudy.valueobjects.Route;
+import com.target.metrotransit.casestudy.valueobjects.TextValuePair;
 
 import mockit.Expectations;
 import mockit.Mocked;
 
-public class MetroTrainsitHelperTest
+public class MetroTransitHelperTest
 {
 
     @Test
     public void getRouteTest( @Mocked RestTemplate template )
     {
-        MetroTrainsitHelper helper = new MetroTrainsitHelper();
+        MetroTransitHelper helper = new MetroTransitHelper();
 
         Route route1 = new Route( "disc1", "123" );
         Route route2 = new Route( "route", "125" );
@@ -47,10 +49,10 @@ public class MetroTrainsitHelperTest
         Assert.assertEquals( route.getRoute(), "125" );
     }
 
-    @Test
+    @Test( expectedExceptions = ResourseNotFoundException.class )
     public void getRouteWithEmptyRouteTest( @Mocked RestTemplate template )
     {
-        MetroTrainsitHelper helper = new MetroTrainsitHelper();
+        MetroTransitHelper helper = new MetroTransitHelper();
 
         Route route1 = new Route( "disc1", "123" );
         Route route2 = new Route( "disc2", "125" );
@@ -73,10 +75,10 @@ public class MetroTrainsitHelperTest
         Assert.assertNull( route );
     }
 
-    @Test
+    @Test( expectedExceptions = ResourseNotFoundException.class )
     public void getRouteEmptyResponseTest( @Mocked RestTemplate template )
     {
-        MetroTrainsitHelper helper = new MetroTrainsitHelper();
+        MetroTransitHelper helper = new MetroTransitHelper();
         Route routes[] = new Route[0];
         ResponseEntity<Route[]> responseEntity = new ResponseEntity<Route[]>( routes, HttpStatus.OK );
 
@@ -95,7 +97,7 @@ public class MetroTrainsitHelperTest
     @Test
     public void isValidDirectionTest( @Mocked RestTemplate template )
     {
-        MetroTrainsitHelper helper = new MetroTrainsitHelper();
+        MetroTransitHelper helper = new MetroTransitHelper();
 
         TextValuePair textValuePair1 = new TextValuePair( "NORTHBOUND", "4" );
         TextValuePair textValuePair2 = new TextValuePair( "SOUTHBOUND", "1" );
@@ -123,7 +125,7 @@ public class MetroTrainsitHelperTest
     @Test
     public void isValidDirectionFalseTest( @Mocked RestTemplate template )
     {
-        MetroTrainsitHelper helper = new MetroTrainsitHelper();
+        MetroTransitHelper helper = new MetroTransitHelper();
 
         TextValuePair textValuePair1 = new TextValuePair( "NORTHBOUND", "4" );
         TextValuePair textValuePair2 = new TextValuePair( "SOUTHBOUND", "1" );
@@ -151,7 +153,7 @@ public class MetroTrainsitHelperTest
     @Test
     public void isValidDirectionWithEmptyResponse( @Mocked RestTemplate template )
     {
-        MetroTrainsitHelper helper = new MetroTrainsitHelper();
+        MetroTransitHelper helper = new MetroTransitHelper();
 
         TextValuePair textValuePairs[] = new TextValuePair[0];
         ResponseEntity<TextValuePair[]> responseEntity = new ResponseEntity<TextValuePair[]>( textValuePairs, HttpStatus.OK );
@@ -172,7 +174,7 @@ public class MetroTrainsitHelperTest
     @Test
     public void getStopTest( @Mocked RestTemplate template )
     {
-        MetroTrainsitHelper helper = new MetroTrainsitHelper();
+        MetroTransitHelper helper = new MetroTransitHelper();
         TextValuePair textValuePair1 = new TextValuePair( "Starlite Transit Center", "STLI" );
         TextValuePair textValuePair2 = new TextValuePair( "63rd Ave  and Zane Ave", "63ZA" );
 
@@ -196,10 +198,10 @@ public class MetroTrainsitHelperTest
         Assert.assertEquals( stopInfo.getValue(), "STLI" );
     }
 
-    @Test
+    @Test( expectedExceptions = ResourseNotFoundException.class )
     public void getStopInvalidStopNameTest( @Mocked RestTemplate template )
     {
-        MetroTrainsitHelper helper = new MetroTrainsitHelper();
+        MetroTransitHelper helper = new MetroTransitHelper();
         TextValuePair textValuePair1 = new TextValuePair( "Starlite Transit Center", "STLI" );
         TextValuePair textValuePair2 = new TextValuePair( "63rd Ave  and Zane Ave", "63ZA" );
 
@@ -218,14 +220,13 @@ public class MetroTrainsitHelperTest
             }
         };
 
-        TextValuePair stopInfo = helper.getStop( "Unknown", "1", "125" );
-        Assert.assertNull( stopInfo );
+        helper.getStop( "Unknown", "1", "125" );
     }
 
-    @Test
+    @Test( expectedExceptions = ResourseNotFoundException.class )
     public void getStopEmptyNameTest( @Mocked RestTemplate template )
     {
-        MetroTrainsitHelper helper = new MetroTrainsitHelper();
+        MetroTransitHelper helper = new MetroTransitHelper();
         TextValuePair textValuePairs[] = new TextValuePair[0];
         ResponseEntity<TextValuePair[]> responseEntity = new ResponseEntity<TextValuePair[]>( textValuePairs, HttpStatus.OK );
         new Expectations()
@@ -242,7 +243,7 @@ public class MetroTrainsitHelperTest
     @Test
     public void getNextTripDetailTest( @Mocked RestTemplate template )
     {
-        MetroTrainsitHelper helper = new MetroTrainsitHelper();
+        MetroTransitHelper helper = new MetroTransitHelper();
         NexTripDeparture nexTripDeparture1 = new NexTripDeparture( "3:35", "/Date(1533328500000-0500)/" );
         NexTripDeparture nexTripDeparture2 = new NexTripDeparture( "4:05", "/Date(1533330300000-0500)/" );
 
@@ -266,12 +267,12 @@ public class MetroTrainsitHelperTest
 
     }
 
-    @Test
+    @Test( expectedExceptions = ResourseNotFoundException.class )
     public void getNextTripDetailWithEmptyResponseTest( @Mocked RestTemplate template )
     {
-        MetroTrainsitHelper helper = new MetroTrainsitHelper();
+        MetroTransitHelper helper = new MetroTransitHelper();
 
-        NexTripDeparture nexTrips[] = new NexTripDeparture[0];
+        NexTripDeparture nexTrips[] = null;
 
         ResponseEntity<NexTripDeparture[]> responseEntity = new ResponseEntity<NexTripDeparture[]>( nexTrips, HttpStatus.OK );
 
@@ -284,23 +285,22 @@ public class MetroTrainsitHelperTest
         };
 
         NexTripDeparture nexTripDeparture = helper.getNextTripDetail( "1", "123", "STLI" );
-        Assert.assertNull( nexTripDeparture );
 
     }
 
     @Test
     public void getWaitTimeInMinutesTest() throws ParseException
     {
-        MetroTrainsitHelper helper = new MetroTrainsitHelper();
+        MetroTransitHelper helper = new MetroTransitHelper();
         NexTripDeparture nexTripDeparture1 = new NexTripDeparture( "3:35", "/Date(1533328500000-0500)/" );
         long diffInTime = helper.getWaitTimeInMinutes( nexTripDeparture1 );
         Assert.assertNotNull( diffInTime );
     }
 
     @Test
-    public void toJsonTest()
+    public void toJsonTest() throws JsonProcessingException
     {
-        MetroTrainsitHelper helper = new MetroTrainsitHelper();
+        MetroTransitHelper helper = new MetroTransitHelper();
         MetroTransitResponse response = new MetroTransitResponse( Boolean.TRUE, "success" );
         String value = helper.toJson( response );
         Assert.assertNotNull( value );

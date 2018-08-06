@@ -1,4 +1,4 @@
-package com.target.metrotransit.metrotransitCaseStudy.entity;
+package com.target.metrotransit.casestudy.valueobjects;
 
 public class MetroTransitRequest
 {

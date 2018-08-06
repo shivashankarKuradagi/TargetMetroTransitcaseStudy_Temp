@@ -1,4 +1,4 @@
-package com.target.metrotransit.metrotransitCaseStudy.controller;
+package com.target.metrotransit.casestudy.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;

@@ -1,4 +1,4 @@
-package com.target.metrotransit.metrotransitCaseStudy.helper;
+package com.target.metrotransit.casestudy.helper;
 
 import java.text.ParseException;
 import java.util.Calendar;
@@ -13,18 +13,19 @@ import org.springframework.web.client.RestTemplate;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.target.metrotransit.metrotransitCaseStudy.constants.MetroTransitConstants;
-import com.target.metrotransit.metrotransitCaseStudy.entity.NexTripDeparture;
-import com.target.metrotransit.metrotransitCaseStudy.entity.Route;
-import com.target.metrotransit.metrotransitCaseStudy.entity.TextValuePair;
+import com.target.metrotransit.casestudy.constants.MetroTransitConstants;
+import com.target.metrotransit.casestudy.exception.ResourseNotFoundException;
+import com.target.metrotransit.casestudy.valueobjects.NexTripDeparture;
+import com.target.metrotransit.casestudy.valueobjects.Route;
+import com.target.metrotransit.casestudy.valueobjects.TextValuePair;
 
 @Component
-public class MetroTrainsitHelper
+public class MetroTransitHelper
 {
 
     RestTemplate template = new RestTemplate();
 
-    Logger log = LoggerFactory.getLogger( this.getClass() );
+    static Logger log = LoggerFactory.getLogger( MetroTransitHelper.class );
 
     /**
      * 
@@ -37,21 +38,19 @@ public class MetroTrainsitHelper
 
         ResponseEntity<Route[]> routes = template.getForEntity( MetroTransitConstants.GET_ROUTES_URL, Route[].class );
 
-        if( routes.getBody() == null )
+        if( routes.getBody() != null )
         {
-            return null;
-        }
-
-        for( Route routeObj : routes.getBody() )
-        {
-            if( routeObj.getDescription().contains( route ) )
+            for( Route routeObj : routes.getBody() )
             {
-
-                log.debug( "Route info :- Description : {}, rootId : {}.", routeObj.getDescription(), routeObj.getRoute() );
-                return routeObj;
+                if( routeObj.getDescription().contains( route ) )
+                {
+                    log.debug( "Route info :- Description : {}, rootId : {}.", routeObj.getDescription(), routeObj.getRoute() );
+                    return routeObj;
+                }
             }
         }
-        return null;
+
+        throw new ResourseNotFoundException( "BUS ROUTE not found." );
     }
 
     /**
@@ -69,21 +68,18 @@ public class MetroTrainsitHelper
         ResponseEntity<TextValuePair[]> directions = template.getForEntity( MetroTransitConstants.GET_DIRECTIONS_URL,
                                                                             TextValuePair[].class,
                                                                             routeId );
-        if( directions.getBody() == null )
+        if( directions.getBody() != null )
         {
-            return false;
-        }
-
-        for( TextValuePair textValuePair : directions.getBody() )
-        {
-            if( direction.equals( textValuePair.getValue() ) )
+            for( TextValuePair textValuePair : directions.getBody() )
             {
-                valid = Boolean.TRUE;
-                log.debug( "Route info :- Text : {}, Value : {}.", textValuePair.getText(), textValuePair.getValue() );
-                break;
+                if( direction.equals( textValuePair.getValue() ) )
+                {
+                    valid = Boolean.TRUE;
+                    log.debug( "Route info :- Text : {}, Value : {}.", textValuePair.getText(), textValuePair.getValue() );
+                    break;
+                }
             }
         }
-
         return valid;
     }
 
@@ -105,21 +101,19 @@ public class MetroTrainsitHelper
                                                                        TextValuePair[].class,
                                                                        routeId,
                                                                        direction );
-        if( stops.getBody() == null )
+        if( stops.getBody() != null )
         {
-            return null;
-        }
-
-        for( TextValuePair textValuePair : stops.getBody() )
-        {
-            if( textValuePair.getText().contains( stop ) )
+            for( TextValuePair textValuePair : stops.getBody() )
             {
-                log.debug( "Found Stop info, stop : {}, stopValue : {}.", textValuePair.getText(), textValuePair.getValue() );
-                return textValuePair;
+                if( textValuePair.getText().contains( stop ) )
+                {
+                    log.debug( "Found Stop info, stop : {}, stopValue : {}.", textValuePair.getText(), textValuePair.getValue() );
+                    return textValuePair;
+                }
             }
         }
 
-        return null;
+        throw new ResourseNotFoundException( "For the given BUS ROUTE and DIRECTION, Invalid BUS STOP NAME is selected" );
     }
 
     /**
@@ -135,28 +129,17 @@ public class MetroTrainsitHelper
     {
 
         log.debug( "Get Next Trip detail for :- Direction : {}, RouteId : {}, StopValue : {}.", direction, routeId, stopValue );
-
-        NexTripDeparture lNexTripDeparture = null;
-
         ResponseEntity<NexTripDeparture[]> departure = template.getForEntity( MetroTransitConstants.GET_DEPARTURE_URL,
                                                                               NexTripDeparture[].class,
                                                                               routeId,
                                                                               direction,
                                                                               stopValue );
-        if( departure.getBody() == null )
+        if( departure.getBody() != null )
         {
-            return null;
+            return departure.getBody()[0];
         }
 
-        for( NexTripDeparture nexTripDeparture : departure.getBody() )
-        {
-            lNexTripDeparture = nexTripDeparture;
-            log.debug( "Next Trip Departure : DepartureText : {}, DepartureTime : {}.",
-                       nexTripDeparture.getDepartureText(),
-                       nexTripDeparture.getDepartureTime() );
-            break;
-        }
-        return lNexTripDeparture;
+        throw new ResourseNotFoundException( "For the given BUS ROUTE, DIRECTION and BUS STOP NAME, Unable to find any Trips." );
     }
 
     /**
@@ -170,14 +153,10 @@ public class MetroTrainsitHelper
 
         TimeZone.setDefault( TimeZone.getTimeZone( MetroTransitConstants.GMT_5_TIME_ZONE ) );
         Calendar cal = Calendar.getInstance( TimeZone.getDefault() );
-        Date CurrentDate = cal.getTime();
-
+        Date currentDate = cal.getTime();
         Date departureDateTime = getDepartureTime( departure.getDepartureTime() );
-
         log.debug( "departureDateTime : {}.", departureDateTime );
-
-        long timeDiff = departureDateTime.getTime() - CurrentDate.getTime();
-
+        long timeDiff = departureDateTime.getTime() - currentDate.getTime();
         return timeDiff / ( 60 * 1000 ) % 60;
 
     }
@@ -185,25 +164,15 @@ public class MetroTrainsitHelper
     private Date getDepartureTime( String departureTime ) throws ParseException
     {
         String dateString = departureTime.split( "-" )[0].substring( 6 );
-
         Date date = new Date( Long.parseLong( dateString ) );
-
         return date;
 
     }
 
-    public String toJson( Object response )
+    public String toJson( Object response ) throws JsonProcessingException
     {
-        try
-        {
-            ObjectMapper mapper = new ObjectMapper();
-            return mapper.writeValueAsString( response );
-        }
-        catch( JsonProcessingException e )
-        {
-
-        }
-        return null;
+        ObjectMapper mapper = new ObjectMapper();
+        return mapper.writeValueAsString( response );
 
     }
 

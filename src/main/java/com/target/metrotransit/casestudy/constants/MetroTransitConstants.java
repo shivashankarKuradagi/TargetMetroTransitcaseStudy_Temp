@@ -1,4 +1,4 @@
-package com.target.metrotransit.metrotransitCaseStudy.constants;
+package com.target.metrotransit.casestudy.constants;
 
 import java.util.HashMap;
 import java.util.Map;
